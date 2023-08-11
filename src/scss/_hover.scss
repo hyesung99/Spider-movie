@@ -1,0 +1,7 @@
+@import '_color';
+
+@mixin hover_darken($color: $color-background) {
+  &:hover {
+    background-color: darken($color, 7%);
+  }
+}
