@@ -4,7 +4,8 @@
       <MovieCard
         v-for="movie in movieList"
         :key="movie.imdbID"
-        :movie="movie" />
+        :movie="movie"
+      />
     </div>
   </section>
 </template>
@@ -12,19 +13,20 @@
 import MovieCard from '@/components/MovieCard.vue'
 export default {
   components: {
-    MovieCard
+    MovieCard,
   },
   computed: {
     movieList() {
-      return this.$store.state.searchModule.searchResult.Search
-    }
-  }
+      return this.$store.state.searchModule.searchResultForMain.Search
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
 @use '@/scss/_flex.scss' as flex;
+@import '@/scss/_size.scss';
 .main {
-  padding: 20px;
+  padding-top: $header-height;
   &_container {
     width: 100%;
     @include flex.flex(row, space-around, center);

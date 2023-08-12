@@ -19,6 +19,7 @@ interface Movie {
 
 interface SearchState {
   searchResult: SearchResult
+  searchResultForMain: SearchResult
   searchQuery: string
   searchTitle: string
   searchYear: string
@@ -29,17 +30,26 @@ interface SearchState {
 const searchModule: Module<SearchState, RootState> = {
   namespaced: true,
   state: {
-    searchResult: {} as SearchResult,
+    searchResult: {
+      Search: [],
+      totalResults: '1',
+      Response: '',
+    },
+    searchResultForMain: {
+      Search: [],
+      totalResults: '1',
+      Response: '',
+    },
     searchTitle: '',
     searchYear: '',
     searchQuery: '',
     searchPage: '1',
-    searchMediaType: MediaTypes.MOVIE
+    searchMediaType: MediaTypes.MOVIE,
   },
   mutations: {
     assignState(
       state: SearchState,
-      payload: { key: keyof SearchState; value: any }
+      payload: { key: keyof SearchState; value: any },
     ) {
       const { key, value } = payload
       console.log(value)
@@ -47,7 +57,6 @@ const searchModule: Module<SearchState, RootState> = {
     },
     updateQuery(state: SearchState) {
       const { searchTitle, searchYear, searchMediaType } = state
-      console.log(searchMediaType)
       const typeQuery =
         searchMediaType && searchMediaType !== MediaTypes.ALL
           ? `&type=${searchMediaType}`
@@ -57,7 +66,7 @@ const searchModule: Module<SearchState, RootState> = {
       const titleQuery = searchTitle ? `&s=${searchTitle}` : ''
       const pageQuery = `&page=${state.searchPage}`
       state.searchQuery = `${titleQuery}${yearQuery}${typeQuery}${pageQuery}`
-    }
+    },
   },
   actions: {
     async searchMovie({ commit, state }) {
@@ -69,8 +78,14 @@ const searchModule: Module<SearchState, RootState> = {
       commit('assignState', { key, value })
       commit('updateQuery')
       dispatch('searchMovie')
-    }
-  }
+    },
+    updateSearchResultForMain({ commit, state }) {
+      commit('assignState', {
+        key: 'searchResultForMain',
+        value: state.searchResult,
+      })
+    },
+  },
 }
 
 export default searchModule

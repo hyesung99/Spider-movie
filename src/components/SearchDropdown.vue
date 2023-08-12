@@ -23,7 +23,11 @@ import MovieCard from './MovieCard.vue'
 export default {
   computed: {
     movieList() {
-      return this.$store.state.searchModule.searchResult.Search.slice(0, 5)
+      if (this.$store.state.searchModule.searchResult.Search) {
+        return this.$store.state.searchModule.searchResult.Search.slice(0, 5)
+      } else {
+        return []
+      }
     },
   },
 }

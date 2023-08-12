@@ -2,7 +2,7 @@
   <div class="header_searchBar">
     <input
       class="header_searchBar_input"
-      @change="changeSearchTitle($event.target.value)"
+      @input="changeSearchTitle($event.target.value)"
       @focus="openDropdown"
       type="text"
       placeholder="검색"
@@ -80,7 +80,7 @@ export default {
     },
     searchMovie() {
       this.closeDropdown()
-      this.$store.dispatch('searchModule/searchMovie')
+      this.$store.dispatch('searchModule/updateSearchResultForMain')
     },
   },
 }
