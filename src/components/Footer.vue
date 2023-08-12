@@ -38,7 +38,7 @@ export default {
         await this.$store.dispatch('searchModule/searchNextPage', {
           addPage: 1,
         })
-        // this.updateMovieList()
+        await this.$store.dispatch('searchModule/updateSearchResultForMain')
       }
     },
     async prevPage() {
@@ -46,7 +46,7 @@ export default {
         await this.$store.dispatch('searchModule/searchNextPage', {
           addPage: -1,
         })
-        // this.updateMovieList()
+        await this.$store.dispatch('searchModule/updateSearchResultForMain')
       }
     },
     async updateMovieList() {
