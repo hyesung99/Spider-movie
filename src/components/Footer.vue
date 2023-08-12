@@ -3,7 +3,8 @@
     <div class="footer_pagination">
       <span
         class="material-symbols-outlined footer_pagination_prev"
-        @click="prevPage">
+        @click="prevPage"
+      >
         chevron_left
       </span>
       <div class="footer_pagination_number">
@@ -11,7 +12,8 @@
       </div>
       <span
         class="material-symbols-outlined footer_pagination_next"
-        @click="nextPage">
+        @click="nextPage"
+      >
         chevron_right
       </span>
     </div>
@@ -26,34 +28,32 @@ export default {
     totalPageNumber() {
       return Math.ceil(
         parseInt(this.$store.state.searchModule.searchResult.totalResults, 10) /
-          10
+          10,
       )
-    }
+    },
   },
   methods: {
-    changePageNumber(pageNumber) {
-      this.$store.dispatch('searchModule/changeSearchOptions', {
-        key: 'searchPage',
-        value: pageNumber
-      })
-    },
-    nextPage() {
+    async nextPage() {
       if (this.pageNumber < this.totalPageNumber) {
-        this.$store.dispatch('searchModule/changeSearchOptions', {
-          key: 'searchPage',
-          value: String(this.pageNumber + 1)
+        await this.$store.dispatch('searchModule/searchNextPage', {
+          addPage: 1,
         })
+        // this.updateMovieList()
       }
     },
-    prevPage() {
+    async prevPage() {
       if (this.pageNumber > 1) {
-        this.$store.dispatch('searchModule/changeSearchOptions', {
-          key: 'searchPage',
-          value: String(this.pageNumber - 1)
+        await this.$store.dispatch('searchModule/searchNextPage', {
+          addPage: -1,
         })
+        // this.updateMovieList()
       }
-    }
-  }
+    },
+    async updateMovieList() {
+      console.log(this.$store.state.searchModule.searchResult.Search)
+      await this.$store.dispatch('searchModule/updateSearchResultForMain')
+    },
+  },
 }
 </script>
 <style lang="scss">

@@ -77,6 +77,7 @@ export default {
         key: 'searchTitle',
         value: title,
       })
+      this.$store.dispatch('searchModule/searchMovie')
     },
     searchMovie() {
       this.closeDropdown()

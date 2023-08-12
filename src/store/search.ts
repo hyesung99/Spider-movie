@@ -2,6 +2,7 @@ import { Module } from 'vuex'
 import { MediaTypes, SearchOptions } from '@/cosntants'
 import { RootState } from '@/store'
 import { fetchMovieData } from '@/apis/movieSearchApi'
+import { update } from 'firebase/database'
 
 interface SearchResult {
   Search: Movie[]
@@ -52,7 +53,6 @@ const searchModule: Module<SearchState, RootState> = {
       payload: { key: keyof SearchState; value: any },
     ) {
       const { key, value } = payload
-      console.log(value)
       state[key] = value
     },
     updateQuery(state: SearchState) {
@@ -73,11 +73,16 @@ const searchModule: Module<SearchState, RootState> = {
       const searchResult = await fetchMovieData(state.searchQuery)
       commit('assignState', { key: 'searchResult', value: searchResult })
     },
-    changeSearchOptions({ commit, dispatch }, payload) {
+    async searchNextPage({ state, dispatch }, payload) {
+      const { addPage } = payload
+      const nextPage = String(Number(state.searchPage) + addPage)
+      dispatch('changeSearchOptions', { key: 'searchPage', value: nextPage })
+      await dispatch('searchMovie')
+    },
+    changeSearchOptions({ commit }, payload) {
       const { key, value } = payload
       commit('assignState', { key, value })
       commit('updateQuery')
-      dispatch('searchMovie')
     },
     updateSearchResultForMain({ commit, state }) {
       commit('assignState', {
