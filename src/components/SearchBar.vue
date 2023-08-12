@@ -28,7 +28,7 @@
         </li>
       </ul>
     </div>
-    <button class="header_searchBar_searchBtn" @click="searchMovie()">
+    <button class="header_searchBar_searchBtn" @click="enterSearch">
       search
     </button>
     <div
@@ -73,15 +73,17 @@ export default {
       this.showDropdown = false
     },
     changeSearchTitle(title) {
-      this.$store.dispatch('searchModule/changeSearchOptions', {
+      this.$store.dispatch('searchModule/setSearchOptions', {
         key: 'searchTitle',
         value: title,
       })
-      this.$store.dispatch('searchModule/searchMovie')
+      this.$store.dispatch('searchModule/searchFirstPageMovies')
     },
-    searchMovie() {
+    enterSearch() {
       this.closeDropdown()
-      this.$store.dispatch('searchModule/updateSearchResultForMain')
+      this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
+      this.$store.dispatch('pageModule/setCurrentPageMovies')
+      this.$store.dispatch('searchModule/searchAllMovies')
     },
   },
 }

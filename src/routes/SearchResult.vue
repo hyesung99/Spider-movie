@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     movieList() {
-      return this.$store.state.searchModule.searchResultForMain.Search
+      return this.$store.getters['pageModule/currentPageMovies']
     },
   },
 }

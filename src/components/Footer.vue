@@ -23,35 +23,20 @@
 export default {
   computed: {
     pageNumber() {
-      return parseInt(this.$store.state.searchModule.searchPage, 10)
+      return this.$store.state.pageModule.currentPage
     },
     totalPageNumber() {
-      return Math.ceil(
-        parseInt(this.$store.state.searchModule.searchResult.totalResults, 10) /
-          10,
-      )
+      return this.$store.state.searchModule.totalPage
     },
   },
   methods: {
     async nextPage() {
-      if (this.pageNumber < this.totalPageNumber) {
-        await this.$store.dispatch('searchModule/searchNextPage', {
-          addPage: 1,
-        })
-        await this.$store.dispatch('searchModule/updateSearchResultForMain')
-      }
+      this.$store.dispatch('pageModule/addCurrentPageNumber', 1)
+      this.$store.dispatch('pageModule/setCurrentPageMovies')
     },
     async prevPage() {
-      if (this.pageNumber > 1) {
-        await this.$store.dispatch('searchModule/searchNextPage', {
-          addPage: -1,
-        })
-        await this.$store.dispatch('searchModule/updateSearchResultForMain')
-      }
-    },
-    async updateMovieList() {
-      console.log(this.$store.state.searchModule.searchResult.Search)
-      await this.$store.dispatch('searchModule/updateSearchResultForMain')
+      this.$store.dispatch('pageModule/addCurrentPageNumber', -1)
+      this.$store.dispatch('pageModule/setCurrentPageMovies')
     },
   },
 }

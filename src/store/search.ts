@@ -1,50 +1,17 @@
 import { Module } from 'vuex'
 import { MediaTypes, SearchOptions } from '@/cosntants'
-import { RootState } from '@/store'
 import { fetchMovieData } from '@/apis/movieSearchApi'
-import { update } from 'firebase/database'
-
-interface SearchResult {
-  Search: Movie[]
-  totalResults: string
-  Response: string
-}
-
-interface Movie {
-  Title: string
-  Year: string
-  imdbID: string
-  Type: string
-  Poster: string
-}
-
-interface SearchState {
-  searchResult: SearchResult
-  searchResultForMain: SearchResult
-  searchQuery: string
-  searchTitle: string
-  searchYear: string
-  searchPage: string
-  searchMediaType: (typeof MediaTypes)[keyof typeof MediaTypes]
-}
+import { RootState, SearchState } from '@/store'
 
 const searchModule: Module<SearchState, RootState> = {
   namespaced: true,
   state: {
-    searchResult: {
-      Search: [],
-      totalResults: '1',
-      Response: '',
-    },
-    searchResultForMain: {
-      Search: [],
-      totalResults: '1',
-      Response: '',
-    },
+    searchResult: [],
     searchTitle: '',
     searchYear: '',
-    searchQuery: '',
     searchPage: '1',
+    searchQuery: '',
+    totalPage: '1',
     searchMediaType: MediaTypes.MOVIE,
   },
   mutations: {
@@ -69,26 +36,34 @@ const searchModule: Module<SearchState, RootState> = {
     },
   },
   actions: {
-    async searchMovie({ commit, state }) {
+    async searchFirstPageMovies({ commit, dispatch, state }) {
+      dispatch('setSearchOptions', { key: 'searchPage', value: 1 })
       const searchResult = await fetchMovieData(state.searchQuery)
-      commit('assignState', { key: 'searchResult', value: searchResult })
+      commit('assignState', {
+        key: 'searchResult',
+        value: [searchResult.Search],
+      })
+      commit('assignState', {
+        key: 'totalPage',
+        value: Math.ceil(Number(searchResult.totalResults) / 10),
+      })
     },
-    async searchNextPage({ state, dispatch }, payload) {
-      const { addPage } = payload
-      const nextPage = String(Number(state.searchPage) + addPage)
-      dispatch('changeSearchOptions', { key: 'searchPage', value: nextPage })
-      await dispatch('searchMovie')
+
+    async searchAllMovies({ commit, dispatch, state }) {
+      const { totalPage } = state
+      const allMovies = state.searchResult
+      for (let i = 2; i <= Number(totalPage); i++) {
+        dispatch('setSearchOptions', { key: 'searchPage', value: i })
+        const searchResult = await fetchMovieData(state.searchQuery)
+        allMovies.push(searchResult.Search)
+        commit('assignState', { key: 'searchResult', value: allMovies })
+      }
     },
-    changeSearchOptions({ commit }, payload) {
+
+    setSearchOptions({ commit }, payload) {
       const { key, value } = payload
       commit('assignState', { key, value })
       commit('updateQuery')
-    },
-    updateSearchResultForMain({ commit, state }) {
-      commit('assignState', {
-        key: 'searchResultForMain',
-        value: state.searchResult,
-      })
     },
   },
 }

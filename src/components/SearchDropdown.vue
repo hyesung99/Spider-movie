@@ -22,11 +22,7 @@
 export default {
   computed: {
     movieList() {
-      if (this.$store.state.searchModule.searchResult.Search) {
-        return this.$store.state.searchModule.searchResult.Search.slice(0, 5)
-      } else {
-        return []
-      }
+      return this.$store.state.searchModule.searchResult[0]
     },
   },
 }
