@@ -55,21 +55,20 @@ const searchModule: Module<SearchState, RootState> = {
 
       const yearQuery = searchYear ? `&y=${searchYear}` : ''
       const titleQuery = searchTitle ? `&s=${searchTitle}` : ''
-      state.searchQuery = `${titleQuery}${yearQuery}${typeQuery}`
+      const pageQuery = `&page=${state.searchPage}`
+      state.searchQuery = `${titleQuery}${yearQuery}${typeQuery}${pageQuery}`
     }
   },
   actions: {
-    changeSearchOptions({ commit }, payload) {
+    async searchMovie({ commit, state }) {
+      const searchResult = await fetchMovieData(state.searchQuery)
+      commit('assignState', { key: 'searchResult', value: searchResult })
+    },
+    changeSearchOptions({ commit, dispatch }, payload) {
       const { key, value } = payload
       commit('assignState', { key, value })
       commit('updateQuery')
-    },
-
-    async searchMovie({ commit, state }) {
-      console.log(state.searchQuery)
-      const searchResult = await fetchMovieData(state.searchQuery)
-      console.log(searchResult)
-      commit('assignState', { key: 'searchResult', value: searchResult })
+      dispatch('searchMovie')
     }
   }
 }

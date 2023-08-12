@@ -2,7 +2,7 @@
   <div class="header_searchBar">
     <input
       class="header_searchBar_input"
-      @change="changeSearchTitle($event.target.value)"
+      @input="changeSearchTitle($event.target.value)"
       type="text"
       placeholder="검색" />
     <div class="header_searchBar_rightside">
@@ -19,7 +19,7 @@
         v-show="showDropdown">
         <li
           class="header_searchBar_rightside_dropdown_item"
-          @click="changeSearchMediatype(mediaType)"
+          @click="changeSearchMediaType(mediaType)"
           v-for="(mediaType, key) in MediaTypes"
           :key="key">
           {{ mediaType }}
@@ -51,7 +51,7 @@ export default {
     toggleDropdown() {
       this.showDropdown = !this.showDropdown
     },
-    changeSearchMediatype(mediaType) {
+    changeSearchMediaType(mediaType) {
       this.$store.dispatch('searchModule/changeSearchOptions', {
         key: 'searchMediaType',
         value: mediaType
