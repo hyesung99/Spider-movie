@@ -1,10 +1,11 @@
 export const MediaTypes = {
+  ALL: 'all',
   MOVIE: 'movie',
   SERIES: 'series',
   EPISODE: 'episode'
 }
 
 export const SearchOptions = {
-  TITLE: 'title',
-  YEAR: 'year'
+  TITLE: 's',
+  YEAR: 'y'
 }

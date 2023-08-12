@@ -32,7 +32,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "src/types/**.d.ts",
-    "src/cosntants/index.js"
+    "src/cosntants/index.js",
+    "src/apis/movieSearchApi.js"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

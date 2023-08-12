@@ -2,6 +2,7 @@
   <div class="header_searchBar">
     <input
       class="header_searchBar_input"
+      @change="changeSearchTitle($event.target.value)"
       type="text"
       placeholder="검색" />
     <div class="header_searchBar_rightside">
@@ -14,10 +15,10 @@
         </span>
       </div>
       <ul
-        class="header_searchBar_dropdown"
+        class="header_searchBar_rightside_dropdown"
         v-show="showDropdown">
         <li
-          class="header_searchBar_dropdown_item"
+          class="header_searchBar_rightside_dropdown_item"
           @click="changeSearchMediatype(mediaType)"
           v-for="(mediaType, key) in MediaTypes"
           :key="key">
@@ -25,6 +26,11 @@
         </li>
       </ul>
     </div>
+    <button
+      class="header_searchBar_rightside_searchBtn"
+      @click="searchMovie">
+      search
+    </button>
   </div>
 </template>
 <script>
@@ -46,8 +52,20 @@ export default {
       this.showDropdown = !this.showDropdown
     },
     changeSearchMediatype(mediaType) {
-      this.$store.dispatch('searchModule/changeSearchMediatype', mediaType)
+      this.$store.dispatch('searchModule/changeSearchOptions', {
+        key: 'searchMediaType',
+        value: mediaType
+      })
       this.showDropdown = false
+    },
+    changeSearchTitle(title) {
+      this.$store.dispatch('searchModule/changeSearchOptions', {
+        key: 'searchTitle',
+        value: title
+      })
+    },
+    searchMovie() {
+      this.$store.dispatch('searchModule/searchMovie')
     }
   }
 }
@@ -87,15 +105,18 @@ export default {
       margin-left: 5px;
       cursor: pointer;
     }
-  }
-  &_dropdown {
-    transition: all 0.3s ease-in-out;
-    margin: 0;
-    &_item {
-      list-style: none;
-      height: 40px;
-      @include flex.flex(row, center, center);
-      @include hover.hover_darken;
+    &_dropdown {
+      transition: all 0.3s ease-in-out;
+      margin: 0;
+      &_item {
+        list-style: none;
+        height: 40px;
+        @include flex.flex(row, center, center);
+        @include hover.hover_darken;
+      }
+    }
+    &_searchBtn {
+      font-size: 15px;
     }
   }
 }
