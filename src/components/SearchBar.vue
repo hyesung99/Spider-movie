@@ -27,7 +27,7 @@
       </ul>
     </div>
     <button
-      class="header_searchBar_rightside_searchBtn"
+      class="header_searchBar_searchBtn"
       @click="searchMovie">
       search
     </button>
@@ -109,15 +109,16 @@ export default {
       transition: all 0.3s ease-in-out;
       margin: 0;
       &_item {
+        width: 50px;
         list-style: none;
         height: 40px;
         @include flex.flex(row, center, center);
         @include hover.hover_darken;
       }
     }
-    &_searchBtn {
-      font-size: 15px;
-    }
+  }
+  &_searchBtn {
+    font-size: 15px;
   }
 }
 </style>

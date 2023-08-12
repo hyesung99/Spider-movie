@@ -3,13 +3,13 @@ import { MediaTypes, SearchOptions } from '@/cosntants'
 import { RootState } from '@/store'
 import { fetchMovieData } from '@/apis/movieSearchApi'
 
-interface Movie {
-  Search: Search
+interface SearchResult {
+  Search: Movie[]
   totalResults: string
   Response: string
 }
 
-interface Search {
+interface Movie {
   Title: string
   Year: string
   imdbID: string
@@ -17,8 +17,8 @@ interface Search {
   Poster: string
 }
 
-interface searchState {
-  searchResult: Movie[]
+interface SearchState {
+  searchResult: SearchResult
   searchQuery: string
   searchTitle: string
   searchYear: string
@@ -26,10 +26,10 @@ interface searchState {
   searchMediaType: (typeof MediaTypes)[keyof typeof MediaTypes]
 }
 
-const searchModule: Module<searchState, RootState> = {
+const searchModule: Module<SearchState, RootState> = {
   namespaced: true,
   state: {
-    searchResult: [],
+    searchResult: {} as SearchResult,
     searchTitle: '',
     searchYear: '',
     searchQuery: '',
@@ -38,18 +38,23 @@ const searchModule: Module<searchState, RootState> = {
   },
   mutations: {
     assignState(
-      state: searchState,
-      payload: { key: keyof searchState; value: any }
+      state: SearchState,
+      payload: { key: keyof SearchState; value: any }
     ) {
       const { key, value } = payload
       console.log(value)
       state[key] = value
     },
-    updateQuery(state: searchState) {
+    updateQuery(state: SearchState) {
       const { searchTitle, searchYear, searchMediaType } = state
-      const typeQuery = searchMediaType !== '' ? `&type=${searchMediaType}` : ''
-      const yearQuery = searchYear !== '' ? `&y=${searchYear}` : ''
-      const titleQuery = searchTitle !== '' ? `&s=${searchTitle}` : ''
+      console.log(searchMediaType)
+      const typeQuery =
+        searchMediaType && searchMediaType !== MediaTypes.ALL
+          ? `&type=${searchMediaType}`
+          : ''
+
+      const yearQuery = searchYear ? `&y=${searchYear}` : ''
+      const titleQuery = searchTitle ? `&s=${searchTitle}` : ''
       state.searchQuery = `${titleQuery}${yearQuery}${typeQuery}`
     }
   },
