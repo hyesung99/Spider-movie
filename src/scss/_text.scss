@@ -1,0 +1,25 @@
+@mixin setText(
+  $size,
+  $weight: normal,
+  $color: black,
+  $align: left,
+  $transform: none
+) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  text-align: $align;
+  text-transform: $transform;
+}
+
+@mixin textEllipsis($lineClamp: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @if ($lineClamp > 1) {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: $lineClamp;
+    -webkit-box-orient: vertical;
+  }
+}

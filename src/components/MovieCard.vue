@@ -23,13 +23,12 @@ export default {
 <style lang="scss" scoped>
 @use '@/scss/_flex.scss' as flex;
 @import '@/scss/_color.scss';
+@import '@/scss/_size.scss';
 .main_container_item {
   width: 270px;
   padding: 10px;
   &_poster {
-    width: 270px;
-    height: 360px;
-    object-fit: cover;
+    @include poster-size(270px);
     z-index: 0;
   }
   &_info {

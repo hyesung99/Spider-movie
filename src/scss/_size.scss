@@ -1,0 +1,8 @@
+@mixin poster-size($width) {
+  width: $width;
+  height: $width * calc(4 / 3);
+  object-fit: cover;
+}
+$header-height: 60px;
+$header-searchBar-width: 40%;
+$header-searchBar-result-height: 500px;
