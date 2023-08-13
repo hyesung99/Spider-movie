@@ -75,7 +75,6 @@ export default {
     },
     enterSearch() {
       this.closeDropdown()
-      this.watingForLoad()
       this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
       this.$store.dispatch('pageModule/setCurrentPageMovies')
       this.$router.push({ name: 'SearchResult' })
