@@ -1,5 +1,5 @@
 import { Module } from 'vuex'
-import { MediaTypes, SearchOptions } from '@/cosntants'
+import { MediaTypes } from '@/cosntants'
 import { fetchMovieData } from '@/apis/movieSearchApi'
 import { RootState, SearchState } from '@/store'
 
