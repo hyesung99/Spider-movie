@@ -33,9 +33,12 @@ export default {
   height: $header-height;
   z-index: 10;
   &_home {
+    box-sizing: border-box;
+    @include text.setText(16px, 1000, $color-header-home, center);
     cursor: pointer;
-    padding: 8px 5px;
-    @include text.setText(20px, 1000, $color-header-home, center);
+    padding: 5px 3px;
+    width: 80px;
+    min-width: 80px;
     border: 5px solid $color-header-home;
   }
 }
