@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { MediaTypes, SearchOptions } from '@/cosntants'
+import { MediaTypes } from '@/cosntants'
 import searchModule from './search.ts'
 import pageModule from './page.ts'
 import detailModule from './detail.ts'

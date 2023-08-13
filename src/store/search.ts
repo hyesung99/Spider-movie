@@ -81,6 +81,10 @@ const searchModule: Module<SearchState, RootState> = {
       commit('assignState', { key, value })
       commit('updateQuery')
     },
+    clearSearchResults({ commit }) {
+      commit('assignState', { key: 'searchResult', value: [] })
+      commit('assignState', { key: 'searchRecommendation', value: [] })
+    },
   },
 }
 

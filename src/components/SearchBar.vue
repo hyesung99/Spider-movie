@@ -4,9 +4,11 @@
       class="header_searchBar_input"
       @input="changeSearchTitle($event.target.value)"
       @focus="openDropdown"
+      ref="searchInput"
       type="text"
       placeholder="검색"
     />
+    <!-- @keydown.enter="enterSearch" 추가예정 -->
     <div class="header_searchBar_rightside">
       <div
         class="header_searchBar_rightside_selected"
@@ -45,6 +47,9 @@ export default {
     mediaType() {
       return this.$store.state.searchModule.searchMediaType
     },
+    searchTitle() {
+      return this.$store.state.searchModule.searchTitle
+    },
   },
   methods: {
     openDropdown() {
@@ -69,10 +74,11 @@ export default {
       this.$store.dispatch('searchModule/searchFirstPageMovies')
     },
     enterSearch() {
-      this.$router.push({ name: 'SearchResult' })
       this.closeDropdown()
+      this.watingForLoad()
       this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
       this.$store.dispatch('pageModule/setCurrentPageMovies')
+      this.$router.push({ name: 'SearchResult' })
       this.$store.dispatch('searchModule/searchAllMovies')
     },
   },

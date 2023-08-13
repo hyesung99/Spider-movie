@@ -19,7 +19,6 @@ const detailModule: Module<DetailState, RootState> = {
   actions: {
     async getMovieDetail({ commit }, payload: string) {
       const movieDetail = await fetchMovieDetail(payload)
-      console.log(movieDetail)
       commit('assignState', {
         key: 'movieDetail',
         value: movieDetail,

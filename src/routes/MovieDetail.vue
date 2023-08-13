@@ -43,7 +43,6 @@
 export default {
   created() {
     this.getMovieDetail()
-    console.log(this.movieDetail)
   },
   computed: {
     movieDetail() {
