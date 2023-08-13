@@ -43,13 +43,15 @@ export default {
 </script>
 <style lang="scss">
 @use '@/scss/_flex.scss' as flex;
+@import '@/scss/_size.scss';
 @import '@/scss/_color.scss';
 .footer {
+  @include flex.flex(row, center, center);
   background-color: $color-footer-background;
+  height: $footer-height;
   &_pagination {
-    color: $color-footer-icon;
     @include flex.flex(row, center, center);
-    padding: 20px;
+    color: $color-footer-icon;
     &_prev {
       cursor: pointer;
     }

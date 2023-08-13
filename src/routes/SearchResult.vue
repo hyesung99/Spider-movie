@@ -33,8 +33,9 @@ export default {
   padding-top: $header-height;
   background-color: $color-background;
   &_container {
-    width: 100%;
     @include flex.flex(row, space-around, center);
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
+    width: 100%;
     flex-wrap: wrap;
   }
 }
