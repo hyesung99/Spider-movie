@@ -25,8 +25,8 @@
       @click="closeDropdown"
       v-show="showDropdown"
     ></div>
+    <SearchDropdown v-show="showDropdown" />
   </div>
-  <SearchDropdown v-show="showDropdown" />
 </template>
 <script>
 import { MediaTypes } from '@/cosntants'
@@ -96,15 +96,13 @@ export default {
   font-size: 15px;
   position: relative;
   display: flex;
-  width: $header-searchBar-width;
   height: 40px;
-  background-color: $color-background;
-  border-radius: 20px;
+  margin-right: 30px;
   &_input {
-    margin-left: 15px;
+    border-radius: 20px;
+    margin: 0 15px;
     border: none;
     padding: 0px 0px 0px 20px;
-    flex-grow: 1;
     height: 100%;
     font-size: 16px;
     &:focus {
@@ -115,9 +113,6 @@ export default {
     @include flex.flex(row, flex-start, center);
     user-select: none;
     &_selected {
-      &:last-child {
-        padding-right: 15px;
-      }
       @include flex.flex(row, center, center);
       cursor: pointer;
       padding: 0 5px;
@@ -135,7 +130,7 @@ export default {
     border-radius: 50%;
   }
   .__active {
-    background-image: $color-header-background;
+    color: $color-genre-text;
   }
 }
 </style>

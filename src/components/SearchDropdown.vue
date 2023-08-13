@@ -5,6 +5,12 @@
       v-for="movie in movieList"
       :key="movie.imdbID"
       :movie="movie"
+      @click="
+        $router.push({
+          name: 'MovieDetail',
+          params: { id: movie.imdbID },
+        })
+      "
     >
       <div
         class="header_searchBar_result_item_poster"
@@ -37,12 +43,14 @@ export default {
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: $header-searchBar-width;
+  width: 100%;
+  height: 500px;
   top: $header-height;
   overflow: auto;
-  z-index: 2;
+  z-index: 5;
   background-color: $color-dropdown-background;
   &_item {
+    cursor: pointer;
     width: 100%;
     &_poster {
       @include flex.flex(row, center, center);

@@ -39,6 +39,11 @@ export default {
       return this.movieDetail.Genre.split(', ')
     },
   },
+  watch: {
+    '$route.params.id': function () {
+      this.getMovieDetail()
+    },
+  },
   methods: {
     getMovieDetail() {
       const movieId = this.$route.params.id
