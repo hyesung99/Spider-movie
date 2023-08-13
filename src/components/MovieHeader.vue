@@ -1,5 +1,11 @@
 <template>
-  <div class="movie-header">
+  <div class="movie_header">
+    <span
+      class="material-symbols-outlined movie_header_home"
+      @click="$router.push({ name: 'Home' })"
+    >
+      home
+    </span>
     <SearchBar />
   </div>
 </template>
@@ -10,19 +16,28 @@ export default {
   components: {
     SearchBar,
   },
+  methods: {
+    goHome() {
+      this.$store.dispatch('searchModule/clearSearchResults')
+      this.$router.push('/')
+    },
+  },
 }
 </script>
 <style lang="scss">
 @use '@/scss/_flex.scss' as flex;
 @import '@/scss/_color.scss';
 @import '@/scss/_size.scss';
-.movie-header {
-  @include flex.flex(row, center, center);
+.movie_header {
+  @include flex.flex(row, space-between, center);
   position: fixed;
   background-image: $color-header-background;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 15px;
   height: $header-height;
   z-index: 10;
+  &_home {
+    cursor: pointer;
+  }
 }
 </style>

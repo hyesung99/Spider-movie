@@ -50,7 +50,6 @@ const searchModule: Module<SearchState, RootState> = {
         key: 'searchResult',
         value: [searchResult.Search],
       })
-      console.log(state.searchResult)
       commit('assignState', {
         key: 'searchRecommendation',
         value: searchResult.Search,
