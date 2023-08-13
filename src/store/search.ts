@@ -14,6 +14,7 @@ const searchModule: Module<SearchState, RootState> = {
     searchQuery: '',
     totalPage: '1',
     searchMediaType: MediaTypes.MOVIE,
+    searchNew: false,
   },
   mutations: {
     assignState(
@@ -40,10 +41,16 @@ const searchModule: Module<SearchState, RootState> = {
     async searchFirstPageMovies({ commit, dispatch, state }) {
       dispatch('setSearchOptions', { key: 'searchPage', value: 1 })
       const searchResult = await fetchMovieData(state.searchQuery)
+
+      commit('assignState', {
+        key: 'searchNew',
+        value: true,
+      })
       commit('assignState', {
         key: 'searchResult',
         value: [searchResult.Search],
       })
+      console.log(state.searchResult)
       commit('assignState', {
         key: 'searchRecommendation',
         value: searchResult.Search,
@@ -57,7 +64,12 @@ const searchModule: Module<SearchState, RootState> = {
     async searchAllMovies({ commit, dispatch, state }) {
       const { totalPage } = state
       const allMovies = state.searchResult
+      commit('assignState', {
+        key: 'searchNew',
+        value: false,
+      })
       for (let i = 2; i <= Number(totalPage); i++) {
+        if (state.searchNew) break
         dispatch('setSearchOptions', { key: 'searchPage', value: i })
         const searchResult = await fetchMovieData(state.searchQuery)
         allMovies.push(searchResult.Search)

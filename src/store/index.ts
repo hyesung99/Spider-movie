@@ -18,6 +18,7 @@ export interface SearchState {
   searchPage: string
   totalPage: string
   searchMediaType: (typeof MediaTypes)[keyof typeof MediaTypes]
+  searchNew: Boolean
 }
 
 export interface PageState {
