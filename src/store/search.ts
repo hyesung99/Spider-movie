@@ -7,6 +7,7 @@ const searchModule: Module<SearchState, RootState> = {
   namespaced: true,
   state: {
     searchResult: [],
+    searchRecommendation: [],
     searchTitle: '',
     searchYear: '',
     searchPage: '1',
@@ -42,6 +43,10 @@ const searchModule: Module<SearchState, RootState> = {
       commit('assignState', {
         key: 'searchResult',
         value: [searchResult.Search],
+      })
+      commit('assignState', {
+        key: 'searchRecommendation',
+        value: searchResult.Search,
       })
       commit('assignState', {
         key: 'totalPage',

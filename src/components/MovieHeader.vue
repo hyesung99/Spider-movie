@@ -8,8 +8,8 @@ import SearchBar from './SearchBar.vue'
 export default {
   name: 'MovieHeader',
   components: {
-    SearchBar
-  }
+    SearchBar,
+  },
 }
 </script>
 <style lang="scss">
@@ -19,9 +19,10 @@ export default {
 .movie-header {
   @include flex.flex(row, center, center);
   position: fixed;
-  background-color: $color-background;
+  background-image: $color-header-background;
   width: 100%;
   padding: 0 20px;
   height: $header-height;
+  z-index: 10;
 }
 </style>

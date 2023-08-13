@@ -11,6 +11,7 @@ export interface RootState {
 
 export interface SearchState {
   searchResult: SearchResult[]
+  searchRecommendation: Movie[]
   searchQuery: string
   searchTitle: string
   searchYear: string
@@ -21,7 +22,7 @@ export interface SearchState {
 
 export interface PageState {
   currentPage: number
-  cuurentpageMovies: Movie
+  currentPageMovies: Movie
 }
 
 export interface DetailState {

@@ -13,7 +13,7 @@ const pageModule: Module<PageState, RootState> = {
   namespaced: true,
   state: {
     currentPage: 1,
-    cuurentpageMovies: {} as Movie,
+    currentPageMovies: {} as Movie,
   },
   mutations: {
     assignState(
@@ -30,7 +30,7 @@ const pageModule: Module<PageState, RootState> = {
     },
 
     currentPageMovies(state) {
-      return state.cuurentpageMovies
+      return state.currentPageMovies
     },
   },
   actions: {
@@ -58,7 +58,11 @@ const pageModule: Module<PageState, RootState> = {
     setCurrentPageMovies({ commit, state, rootState }) {
       const searchResult = rootState.searchModule.searchResult
       const currentPage = searchResult[state.currentPage - 1]
-      commit('assignState', { key: 'cuurentpageMovies', value: currentPage })
+      console.log(currentPage)
+      commit('assignState', {
+        key: 'currentPageMovies',
+        value: currentPage,
+      })
     },
   },
 }

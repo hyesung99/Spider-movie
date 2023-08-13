@@ -22,7 +22,7 @@
 export default {
   computed: {
     movieList() {
-      return this.$store.state.searchModule.searchResult[0]
+      return this.$store.state.searchModule.searchRecommendation
     },
   },
 }

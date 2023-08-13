@@ -6,6 +6,7 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     {
+      name: 'SearchResult',
       path: '/',
       component: SearchResult,
     },

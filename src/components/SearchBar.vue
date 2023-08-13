@@ -8,29 +8,18 @@
       placeholder="검색"
     />
     <div class="header_searchBar_rightside">
-      <div class="header_searchBar_rightside_selected">
+      <div
+        class="header_searchBar_rightside_selected"
+        :class="{ __active: mediaType === this.mediaType }"
+        v-for="mediaType in MediaTypes"
+        @click="changeSearchMediaType(mediaType)"
+      >
         {{ mediaType }}
-        <span
-          class="material-symbols-outlined header_searchBar_rightside_icon"
-          @click="openDropdown"
-        >
-          expand_circle_down
-        </span>
       </div>
-      <ul class="header_searchBar_rightside_dropdown" v-show="showDropdown">
-        <li
-          class="header_searchBar_rightside_dropdown_item"
-          @click="changeSearchMediaType(mediaType)"
-          v-for="(mediaType, key) in MediaTypes"
-          :key="key"
-        >
-          {{ mediaType }}
-        </li>
-      </ul>
     </div>
-    <button class="header_searchBar_searchBtn" @click="enterSearch">
-      search
-    </button>
+    <div class="header_searchBar_searchBtn" @click="enterSearch">
+      <span class="material-symbols-outlined"> search </span>
+    </div>
     <div
       class="header_searchBar_darken"
       @click="closeDropdown"
@@ -58,19 +47,19 @@ export default {
     },
   },
   methods: {
-    closeDropdown() {
-      this.showDropdown = false
-    },
     openDropdown() {
       this.showDropdown = true
     },
+    closeDropdown() {
+      this.showDropdown = false
+    },
     changeSearchMediaType(mediaType) {
-      this.closeDropdown()
-      this.$store.dispatch('searchModule/changeSearchOptions', {
+      this.openDropdown()
+      this.$store.dispatch('searchModule/setSearchOptions', {
         key: 'searchMediaType',
         value: mediaType,
       })
-      this.showDropdown = false
+      this.$store.dispatch('searchModule/searchFirstPageMovies')
     },
     changeSearchTitle(title) {
       this.$store.dispatch('searchModule/setSearchOptions', {
@@ -80,6 +69,7 @@ export default {
       this.$store.dispatch('searchModule/searchFirstPageMovies')
     },
     enterSearch() {
+      this.$router.push({ name: 'SearchResult' })
       this.closeDropdown()
       this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
       this.$store.dispatch('pageModule/setCurrentPageMovies')
@@ -103,50 +93,49 @@ export default {
   z-index: 0;
 }
 .header_searchBar {
-  border-bottom: 1px solid $color-header-border;
+  font-size: 15px;
   position: relative;
   display: flex;
   width: $header-searchBar-width;
   height: 40px;
-
+  background-color: $color-background;
+  border-radius: 20px;
   &_input {
     margin-left: 15px;
     border: none;
-    padding: 0px;
+    padding: 0px 0px 0px 20px;
     flex-grow: 1;
     height: 100%;
     font-size: 16px;
-    background-color: $color-background;
     &:focus {
       outline: none;
     }
   }
   &_rightside {
+    @include flex.flex(row, flex-start, center);
     user-select: none;
-    padding: 0 10px;
-    border-bottom: none;
     &_selected {
-      height: 40px;
-      @include flex.flex(row, center, center);
-    }
-    &_icon {
-      margin-left: 5px;
-      cursor: pointer;
-    }
-    &_dropdown {
-      transition: all 0.3s ease-in-out;
-      margin: 0;
-      &_item {
-        width: 50px;
-        list-style: none;
-        height: 40px;
-        @include flex.flex(row, center, center);
-        @include hover.hover_darken;
+      &:last-child {
+        padding-right: 15px;
       }
+      @include flex.flex(row, center, center);
+      cursor: pointer;
+      padding: 0 5px;
+      height: 100%;
     }
   }
   &_searchBtn {
-    font-size: 15px;
+    @include flex.flex(row, center, center);
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+    cursor: pointer;
+    margin-left: 5px;
+    border: 2px solid $color-searchBtn-border;
+    border-radius: 50%;
+  }
+  .__active {
+    background-image: $color-header-background;
   }
 }
 </style>

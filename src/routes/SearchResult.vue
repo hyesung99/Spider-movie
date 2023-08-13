@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     movieList() {
-      return this.$store.getters['pageModule/currentPageMovies']
+      return this.$store.state.pageModule.currentPageMovies
     },
   },
 }
