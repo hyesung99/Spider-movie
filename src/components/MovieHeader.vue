@@ -1,11 +1,6 @@
 <template>
   <div class="movie_header">
-    <span
-      class="material-symbols-outlined movie_header_home"
-      @click="$router.push({ name: 'Home' })"
-    >
-      home
-    </span>
+    <div class="movie_header_home" @click="goHome">SPIDER MOVIE</div>
     <SearchBar />
   </div>
 </template>
@@ -26,6 +21,7 @@ export default {
 </script>
 <style lang="scss">
 @use '@/scss/_flex.scss' as flex;
+@use '@/scss/_text.scss' as text;
 @import '@/scss/_color.scss';
 @import '@/scss/_size.scss';
 .movie_header {
@@ -38,6 +34,9 @@ export default {
   z-index: 10;
   &_home {
     cursor: pointer;
+    padding: 8px 5px;
+    @include text.setText(20px, 1000, $color-header-home, center);
+    border: 5px solid $color-header-home;
   }
 }
 </style>
