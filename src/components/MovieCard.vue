@@ -28,6 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 @use '@/scss/_flex.scss' as flex;
+@use '@/scss/_text.scss' as text;
 @import '@/scss/_color.scss';
 @import '@/scss/_size.scss';
 .main_container_item {
@@ -41,6 +42,7 @@ export default {
   &_info {
     cursor: pointer;
     @include flex.flex(row, center, center);
+    @include text.setText(20px, bold, $color-movieCard-text, center);
     height: 50px;
     font-size: 20px;
     font-weight: bold;

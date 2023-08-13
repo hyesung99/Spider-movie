@@ -13,14 +13,27 @@
           {{ genre }}
         </div>
       </div>
-
+      <div class="detail_info_director">
+        <span class="material-symbols-outlined"> create </span>
+        <span>{{ movieDetail.Director }}</span>
+      </div>
+      <div class="detail_info_actors">
+        <span class="material-symbols-outlined"> people </span>
+        <span>{{ movieDetail.Actors }}</span>
+      </div>
+      <div class="detail_info_runtime">
+        <span class="material-symbols-outlined"> schedule </span>
+        <span>{{ movieDetail.Runtime }}</span>
+      </div>
       <p class="detail_info_plot">{{ movieDetail.Plot }}</p>
       <div class="detail_info_rating">
         <div class="detail_info_rating_logo">
           <img src="@/images/imdb_logo.jpg" alt="imdb" />
         </div>
         <span class="material-symbols-outlined"> star </span>
-        <div class="detail_info_rating_score">{{ movieDetail.imdbRating }}</div>
+        <div class="detail_info_rating_score">
+          {{ movieDetail.imdbRating }}
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +43,7 @@
 export default {
   created() {
     this.getMovieDetail()
+    console.log(this.movieDetail)
   },
   computed: {
     movieDetail() {
@@ -61,7 +75,8 @@ export default {
   box-sizing: border-box;
   padding-top: $header-height;
   display: flex;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
   background-color: $color-background;
   &_poster {
     position: relative;
@@ -73,22 +88,26 @@ export default {
       position: absolute;
       top: 0;
       right: 0;
-      width: 50%;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(to left, rgba(0, 0, 0, 1), transparent);
+      background: linear-gradient(to left, $color-background, transparent);
     }
   }
   &_info {
-    padding: 0 20px;
-    @include flex.flex(column, space-between, flex-start);
+    color: $color-movieDetail-text;
+    padding: 60px;
+    @include flex.flex(column, flex-start, flex-start);
     &_title {
-      @include text.setText(2rem, 1000);
+      @include text.setText(3rem, 1000, $color-movieDetail-title);
+      margin-bottom: 10px;
     }
     &_year {
-      @include text.setText(1.5rem, 1000);
+      @include text.setText(2rem, 1000, $color-movieDetail-text);
+      margin-bottom: 20px;
     }
     &_genres {
       @include flex.flex(row, flex-start, center);
+      margin-bottom: 25px;
       &_tag {
         @include flex.flex(row, flex-start, center);
         background-color: $color-background-tag;
@@ -102,13 +121,29 @@ export default {
       @include flex.flex(row, flex-start, center);
       &_logo {
         width: 50px;
-        height: 30px;
+        height: 25px;
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
       }
+    }
+    &_director {
+      @include flex.flex(row, flex-start, center);
+      margin-bottom: 10px;
+    }
+    &_actors {
+      @include flex.flex(row, flex-start, center);
+      margin-bottom: 10px;
+    }
+    &_runtime {
+      @include flex.flex(row, flex-start, center);
+      margin-bottom: 20px;
+    }
+    &_plot {
+      @include text.setText(1.2rem, 500, $color-movieDetail-text);
+      margin-bottom: 50px;
     }
   }
 }

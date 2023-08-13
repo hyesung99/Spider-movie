@@ -44,7 +44,7 @@ export default {
   flex-direction: column;
   position: absolute;
   width: 100%;
-  height: 500px;
+  max-height: 500px;
   top: $header-height;
   overflow: auto;
   z-index: 5;
@@ -62,9 +62,10 @@ export default {
         height: 100px;
         width: 100%;
         background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
       }
       &_title {
-        @include text.setText(20px, bold, $color-main, center);
+        @include text.setText(20px, bold, $color-movieCard-text, center);
         @include text.textEllipsis(2);
         margin: 0 10px;
         z-index: 2;

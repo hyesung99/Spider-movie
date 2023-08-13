@@ -28,8 +28,10 @@ export default {
 <style lang="scss" scoped>
 @use '@/scss/_flex.scss' as flex;
 @import '@/scss/_size.scss';
+@import '@/scss/_color.scss';
 .main {
   padding-top: $header-height;
+  background-color: $color-background;
   &_container {
     width: 100%;
     @include flex.flex(row, space-around, center);
