@@ -8,12 +8,15 @@
       />
     </div>
   </section>
+  <Footer />
 </template>
 <script>
 import MovieCard from '@/components/MovieCard.vue'
+import Footer from '@/components/Footer.vue'
 export default {
   components: {
     MovieCard,
+    Footer,
   },
   computed: {
     movieList() {

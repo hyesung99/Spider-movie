@@ -1,8 +1,14 @@
 <template>
-  <div class="main_container_item">
-    <img
-      class="main_container_item_poster"
-      :src="movie.Poster" />
+  <div
+    class="main_container_item"
+    @click="
+      $router.push({
+        name: 'MovieDetail',
+        params: { id: movie.imdbID },
+      })
+    "
+  >
+    <img class="main_container_item_poster" :src="movie.Poster" />
     <h1 class="main_container_item_info">
       {{ movie.Title }} ({{ movie.Year }})
     </h1>
@@ -14,9 +20,9 @@ export default {
   props: {
     movie: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 
@@ -27,6 +33,7 @@ export default {
 .main_container_item {
   width: 270px;
   padding: 10px;
+  cursor: pointer;
   &_poster {
     @include poster-size(270px);
     z-index: 0;

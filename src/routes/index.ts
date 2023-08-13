@@ -10,7 +10,8 @@ export default createRouter({
       component: SearchResult,
     },
     {
-      path: '/detail',
+      name: 'MovieDetail',
+      path: '/detail/:id',
       component: MovieDetail,
     },
   ],
