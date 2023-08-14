@@ -26,7 +26,11 @@
       @click="closeDropdown"
       v-show="showDropdown"
     ></div>
-    <SearchDropdown v-show="showDropdown" :movieList="movieList" />
+    <SearchDropdown
+      v-show="showDropdown"
+      :movieList="movieList"
+      :goMovieDetail="goMovieDetail"
+    />
   </div>
 </template>
 <script>
@@ -62,6 +66,10 @@ export default {
     },
     movieList: {
       type: Array,
+      required: true,
+    },
+    goMovieDetail: {
+      type: Function,
       required: true,
     },
   },

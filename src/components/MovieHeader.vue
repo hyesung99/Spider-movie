@@ -9,6 +9,7 @@
       :showDropdown="showDropdown"
       :mediaTypes="MediaTypes"
       :movieList="movieList"
+      :goMovieDetail="goMovieDetail"
       @setDropdownVisiblliity="setDropdownVisiblliity"
     />
   </div>
@@ -67,6 +68,12 @@ export default {
 
     setDropdownVisiblliity(value) {
       this.showDropdown = value
+    },
+    goMovieDetail(movieID) {
+      this.$router.push({
+        name: 'MovieDetail',
+        params: { id: movieID },
+      })
     },
   },
 }

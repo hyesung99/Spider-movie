@@ -5,12 +5,7 @@
       v-for="movie in movieList"
       :key="movie.imdbID"
       :movie="movie"
-      @click="
-        $router.push({
-          name: 'MovieDetail',
-          params: { id: movie.imdbID },
-        })
-      "
+      @click="goMovieDetail(movie.imdbID)"
     >
       <div
         class="header_searchBar_result_item_poster"
@@ -29,6 +24,10 @@ export default {
   props: {
     movieList: {
       type: Array,
+      required: true,
+    },
+    goMovieDetail: {
+      type: Function,
       required: true,
     },
   },
