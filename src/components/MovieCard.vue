@@ -17,6 +17,9 @@
 
 <script lang="ts">
 export default {
+  created() {
+    console.log(this.movie)
+  },
   props: {
     movie: {
       type: Object,
