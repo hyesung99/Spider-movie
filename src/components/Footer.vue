@@ -8,7 +8,7 @@
         chevron_left
       </span>
       <div class="footer_pagination_number">
-        {{ pageNumber }} of {{ totalPageNumber }}
+        {{ currentPageNumber }} of {{ totalPageNumber }}
       </div>
       <span
         class="material-symbols-outlined footer_pagination_next"
@@ -21,22 +21,22 @@
 </template>
 <script>
 export default {
-  computed: {
-    pageNumber() {
-      return this.$store.state.pageModule.currentPage
+  props: {
+    nextPage: {
+      type: Function,
+      required: true,
     },
-    totalPageNumber() {
-      return this.$store.state.searchModule.totalPage
+    prevPage: {
+      type: Function,
+      required: true,
     },
-  },
-  methods: {
-    async nextPage() {
-      this.$store.dispatch('pageModule/addCurrentPageNumber', 1)
-      this.$store.dispatch('pageModule/setCurrentPageMovies')
+    currentPageNumber: {
+      type: Number,
+      required: true,
     },
-    async prevPage() {
-      this.$store.dispatch('pageModule/addCurrentPageNumber', -1)
-      this.$store.dispatch('pageModule/setCurrentPageMovies')
+    totalPageNumber: {
+      type: Number,
+      required: true,
     },
   },
 }
