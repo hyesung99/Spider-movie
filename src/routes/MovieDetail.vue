@@ -1,4 +1,5 @@
 <template>
+  <MovieHeader />
   <div class="detail">
     <div class="detail_poster">
       <img class="detail_poster_img" :src="movieDetail.Poster" />
@@ -40,7 +41,11 @@
 </template>
 
 <script>
+import MovieHeader from '@/components/MovieHeader.vue'
 export default {
+  components: {
+    MovieHeader,
+  },
   created() {
     this.getMovieDetail()
   },

@@ -1,4 +1,5 @@
 <template>
+  <MovieHeader />
   <section class="main">
     <MovieContainer :movieList="movieList" />
   </section>
@@ -12,10 +13,12 @@
 <script>
 import Footer from '@/components/Footer.vue'
 import MovieContainer from '@/components/MovieContainer.vue'
+import MovieHeader from '@components/MovieHeader.vue'
 export default {
   components: {
     MovieContainer,
     Footer,
+    MovieHeader,
   },
   computed: {
     movieList() {

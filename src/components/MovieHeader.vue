@@ -1,20 +1,68 @@
 <template>
   <div class="movie_header">
     <div class="movie_header_home" @click="goHome">SPIDER MOVIE</div>
-    <SearchBar />
+    <SearchBar
+      :mediaType="mediaType"
+      :changeSearchMediaType="changeSearchMediaType"
+      :changeSearchTitle="changeSearchTitle"
+      :enterSearch="enterSearch"
+      :showDropdown="showDropdown"
+      :mediaTypes="MediaTypes"
+      @setDropdownVisiblliity="setDropdownVisiblliity"
+    />
   </div>
 </template>
 <script>
 import SearchBar from './SearchBar.vue'
+import { MediaTypes } from '@/cosntants'
+
 export default {
   name: 'MovieHeader',
   components: {
     SearchBar,
   },
+  computed: {
+    mediaType() {
+      return this.$store.state.searchModule.searchMediaType
+    },
+  },
+  data() {
+    return {
+      showDropdown: false,
+      MediaTypes,
+    }
+  },
   methods: {
     goHome() {
       this.$store.dispatch('searchModule/clearSearchResults')
       this.$router.push('/')
+    },
+    changeSearchMediaType(mediaType) {
+      this.setDropdownVisiblliity(true)
+      this.$store.dispatch('searchModule/setSearchOptions', {
+        key: 'searchMediaType',
+        value: mediaType,
+      })
+      this.$store.dispatch('searchModule/searchFirstPageMovies')
+    },
+    changeSearchTitle(title) {
+      this.setDropdownVisiblliity(true)
+      this.$store.dispatch('searchModule/setSearchOptions', {
+        key: 'searchTitle',
+        value: title,
+      })
+      this.$store.dispatch('searchModule/searchFirstPageMovies')
+    },
+    enterSearch() {
+      this.setDropdownVisiblliity(false)
+      this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
+      this.$store.dispatch('pageModule/setCurrentPageMovies')
+      this.$router.push({ name: 'SearchResult' })
+      this.$store.dispatch('searchModule/searchAllMovies')
+    },
+
+    setDropdownVisiblliity(value) {
+      this.showDropdown = value
     },
   },
 }

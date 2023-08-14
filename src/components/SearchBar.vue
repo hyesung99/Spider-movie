@@ -3,7 +3,6 @@
     <input
       class="header_searchBar_input"
       @input="changeSearchTitle($event.target.value)"
-      @focus="openDropdown"
       ref="searchInput"
       type="text"
       placeholder="검색"
@@ -12,8 +11,8 @@
     <div class="header_searchBar_rightside">
       <div
         class="header_searchBar_rightside_selected"
-        :class="{ __active: mediaType === this.mediaType }"
-        v-for="mediaType in MediaTypes"
+        :class="{ __active: mediaType === mediaType }"
+        v-for="mediaType in mediaTypes"
         @click="changeSearchMediaType(mediaType)"
       >
         {{ mediaType }}
@@ -31,54 +30,43 @@
   </div>
 </template>
 <script>
-import { MediaTypes } from '@/cosntants'
 import SearchDropdown from './SearchDropdown.vue'
 export default {
   components: {
     SearchDropdown,
   },
-  data() {
-    return {
-      MediaTypes,
-      showDropdown: false,
-    }
-  },
-  computed: {
-    mediaType() {
-      return this.$store.state.searchModule.searchMediaType
+  props: {
+    mediaType: {
+      type: String,
+      required: true,
     },
-    searchTitle() {
-      return this.$store.state.searchModule.searchTitle
+    changeSearchMediaType: {
+      type: Function,
+      required: true,
+    },
+    changeSearchTitle: {
+      type: Function,
+      required: true,
+    },
+    enterSearch: {
+      type: Function,
+      required: true,
+    },
+    showDropdown: {
+      type: Boolean,
+      required: true,
+    },
+    mediaTypes: {
+      type: Array,
+      required: true,
     },
   },
   methods: {
     openDropdown() {
-      this.showDropdown = true
+      this.$emit('setDropdownVisiblliity', true)
     },
     closeDropdown() {
-      this.showDropdown = false
-    },
-    changeSearchMediaType(mediaType) {
-      this.openDropdown()
-      this.$store.dispatch('searchModule/setSearchOptions', {
-        key: 'searchMediaType',
-        value: mediaType,
-      })
-      this.$store.dispatch('searchModule/searchFirstPageMovies')
-    },
-    changeSearchTitle(title) {
-      this.$store.dispatch('searchModule/setSearchOptions', {
-        key: 'searchTitle',
-        value: title,
-      })
-      this.$store.dispatch('searchModule/searchFirstPageMovies')
-    },
-    enterSearch() {
-      this.closeDropdown()
-      this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
-      this.$store.dispatch('pageModule/setCurrentPageMovies')
-      this.$router.push({ name: 'SearchResult' })
-      this.$store.dispatch('searchModule/searchAllMovies')
+      this.$emit('setDropdownVisiblliity', false)
     },
   },
 }

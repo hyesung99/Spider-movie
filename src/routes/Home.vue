@@ -1,4 +1,5 @@
 <template>
+  <MovieHeader />
   <div class="home">
     <img
       src="@/images/home_background.jpg"
@@ -9,6 +10,14 @@
     <h1 class="home_title">영화를 검색하세요!</h1>
   </div>
 </template>
+<script>
+import MovieHeader from '@/components/MovieHeader.vue'
+export default {
+  components: {
+    MovieHeader,
+  },
+}
+</script>
 <style lang="scss" scoped>
 @import '@/scss/_size.scss';
 .home {
