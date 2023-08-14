@@ -26,7 +26,7 @@
       @click="closeDropdown"
       v-show="showDropdown"
     ></div>
-    <SearchDropdown v-show="showDropdown" />
+    <SearchDropdown v-show="showDropdown" :movieList="movieList" />
   </div>
 </template>
 <script>
@@ -57,6 +57,10 @@ export default {
       required: true,
     },
     mediaTypes: {
+      type: Object,
+      required: true,
+    },
+    movieList: {
       type: Array,
       required: true,
     },

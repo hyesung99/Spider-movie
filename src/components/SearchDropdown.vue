@@ -26,9 +26,10 @@
 </template>
 <script>
 export default {
-  computed: {
-    movieList() {
-      return this.$store.state.searchModule.searchRecommendation
+  props: {
+    movieList: {
+      type: Array,
+      required: true,
     },
   },
 }

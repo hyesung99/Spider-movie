@@ -8,6 +8,7 @@
       :enterSearch="enterSearch"
       :showDropdown="showDropdown"
       :mediaTypes="MediaTypes"
+      :movieList="movieList"
       @setDropdownVisiblliity="setDropdownVisiblliity"
     />
   </div>
@@ -24,6 +25,9 @@ export default {
   computed: {
     mediaType() {
       return this.$store.state.searchModule.searchMediaType
+    },
+    movieList() {
+      return this.$store.state.searchModule.searchRecommendation
     },
   },
   data() {
