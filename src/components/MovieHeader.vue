@@ -17,6 +17,7 @@
 <script>
 import SearchBar from './SearchBar.vue'
 import { MediaTypes } from '@/cosntants'
+import debounce from 'lodash/debounce'
 
 export default {
   name: 'MovieHeader',
@@ -42,6 +43,7 @@ export default {
       this.$store.dispatch('searchModule/clearSearchResults')
       this.$router.push('/')
     },
+
     changeSearchMediaType(mediaType) {
       this.setDropdownVisiblliity(true)
       this.$store.dispatch('searchModule/setSearchOptions', {
@@ -50,14 +52,16 @@ export default {
       })
       this.$store.dispatch('searchModule/searchFirstPageMovies')
     },
-    changeSearchTitle(title) {
+
+    changeSearchTitle: debounce(function (title) {
       this.setDropdownVisiblliity(true)
       this.$store.dispatch('searchModule/setSearchOptions', {
         key: 'searchTitle',
         value: title,
       })
       this.$store.dispatch('searchModule/searchFirstPageMovies')
-    },
+    }, 200),
+
     enterSearch() {
       this.setDropdownVisiblliity(false)
       this.$store.dispatch('pageModule/setCurrentPageNumber', 1)

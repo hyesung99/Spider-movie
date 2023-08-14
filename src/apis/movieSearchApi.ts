@@ -1,8 +1,4 @@
 import axios from 'axios'
-// import dotenv from 'dotenv'
-// dotenv.config()
-
-// const { API_KEY, API_ENDPOINT } = process.env
 
 const API_ENDPOINT = 'https://omdbapi.com'
 const API_KEY = '7035c60c'

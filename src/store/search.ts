@@ -39,13 +39,12 @@ const searchModule: Module<SearchState, RootState> = {
   },
   actions: {
     async searchFirstPageMovies({ commit, dispatch, state }) {
-      dispatch('setSearchOptions', { key: 'searchPage', value: 1 })
-      const searchResult = await fetchMovieData(state.searchQuery)
-
       commit('assignState', {
         key: 'searchNew',
         value: true,
       })
+      dispatch('setSearchOptions', { key: 'searchPage', value: 1 })
+      const searchResult = await fetchMovieData(state.searchQuery)
       commit('assignState', {
         key: 'searchResult',
         value: [searchResult.Search],
