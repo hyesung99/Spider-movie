@@ -11,9 +11,9 @@
     <div class="header_searchBar_rightside">
       <div
         class="header_searchBar_rightside_selected"
-        :class="{ __active: mediaType === mediaType }"
-        v-for="mediaType in mediaTypes"
-        @click="changeSearchMediaType(mediaType)"
+        v-for="mediaType in MediaTypes"
+        :class="{ __active: mediaType === selectedMediaType }"
+        @click="clickMediaType(mediaType)"
       >
         {{ mediaType }}
       </div>
@@ -35,15 +35,18 @@
 </template>
 <script>
 import SearchDropdown from './SearchDropdown.vue'
+import { MediaTypes } from '@/cosntants'
 export default {
   components: {
     SearchDropdown,
   },
+  data() {
+    return {
+      MediaTypes,
+      selectedMediaType: MediaTypes.ALL,
+    }
+  },
   props: {
-    mediaType: {
-      type: String,
-      required: true,
-    },
     changeSearchMediaType: {
       type: Function,
       required: true,
@@ -58,10 +61,6 @@ export default {
     },
     showDropdown: {
       type: Boolean,
-      required: true,
-    },
-    mediaTypes: {
-      type: Object,
       required: true,
     },
     movieList: {
@@ -79,6 +78,10 @@ export default {
     },
     closeDropdown() {
       this.$emit('setDropdownVisiblliity', false)
+    },
+    clickMediaType(mediaType) {
+      this.changeSearchMediaType(mediaType)
+      this.selectedMediaType = mediaType
     },
   },
 }

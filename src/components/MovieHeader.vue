@@ -7,7 +7,6 @@
       :changeSearchTitle="changeSearchTitle"
       :enterSearch="enterSearch"
       :showDropdown="showDropdown"
-      :mediaTypes="MediaTypes"
       :movieList="movieList"
       :goMovieDetail="goMovieDetail"
       @setDropdownVisiblliity="setDropdownVisiblliity"
@@ -16,7 +15,7 @@
 </template>
 <script>
 import SearchBar from './SearchBar.vue'
-import { MediaTypes } from '@/cosntants'
+import { searchDebounceTime, basePageNumber } from '@/cosntants'
 import debounce from 'lodash/debounce'
 
 export default {
@@ -35,7 +34,6 @@ export default {
   data() {
     return {
       showDropdown: false,
-      MediaTypes,
     }
   },
   methods: {
@@ -64,7 +62,7 @@ export default {
 
     searchFirstPageMoviesByInputChange: debounce(async function () {
       await this.$store.dispatch('searchModule/searchFirstPageMovies')
-    }, 200),
+    }, searchDebounceTime),
 
     async enterSearch(title) {
       if (title !== this.$store.state.searchModule.searchTitle) {
@@ -72,9 +70,8 @@ export default {
       }
       await this.$store.dispatch('searchModule/searchFirstPageMovies')
       const currentPage = this.$store.state.searchModule.searchResult[0]
-      console.log(currentPage)
       this.setDropdownVisiblliity(false)
-      this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
+      this.$store.dispatch('pageModule/setCurrentPageNumber', basePageNumber)
       this.$store.dispatch('pageModule/setCurrentPageMovies', { currentPage })
       this.$router.push({ name: 'SearchResult' })
       this.$store.dispatch('searchModule/searchAllMovies')
