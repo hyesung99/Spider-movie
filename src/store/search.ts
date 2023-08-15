@@ -41,10 +41,6 @@ const searchModule: Module<SearchState, RootState> = {
   },
   actions: {
     async searchFirstPageMovies({ commit, dispatch, state }) {
-      commit('assignState', {
-        key: 'searchNew',
-        value: true,
-      })
       dispatch('setSearchOptions', { key: 'searchPage', value: 1 })
       const searchResult = await fetchMovieData(state.searchQuery)
       if (searchResult.Response === 'False') {
@@ -76,6 +72,13 @@ const searchModule: Module<SearchState, RootState> = {
       }
     },
 
+    stopSearchAllMovies({ commit }) {
+      commit('assignState', {
+        key: 'searchNew',
+        value: true,
+      })
+    },
+
     async searchAllMovies({ commit, dispatch, state }) {
       const { totalPage } = state
       const allMovies = state.searchResult
@@ -84,11 +87,11 @@ const searchModule: Module<SearchState, RootState> = {
         value: false,
       })
       for (let i = 2; i <= Number(totalPage); i++) {
+        commit('assignState', { key: 'searchResult', value: allMovies })
         if (state.searchNew) break
         dispatch('setSearchOptions', { key: 'searchPage', value: i })
         const searchResult = await fetchMovieData(state.searchQuery)
         allMovies.push(searchResult.Search)
-        commit('assignState', { key: 'searchResult', value: allMovies })
       }
     },
 

@@ -1,24 +1,31 @@
 <template>
-  <MovieHeader />
-  <section class="main">
-    <MovieContainer :movieList="movieList" />
-  </section>
-  <Footer
-    :nextPage="nextPage"
-    :prevPage="prevPage"
-    :currentPageNumber="currentPageNumber"
-    :totalPageNumber="totalPageNumber"
-  />
+  <template v-if="!movieList">
+    <Loading />
+  </template>
+  <template v-else-if="movieList">
+    <MovieHeader />
+    <section class="main">
+      <MovieContainer :movieList="movieList" />
+    </section>
+    <Footer
+      :nextPage="nextPage"
+      :prevPage="prevPage"
+      :currentPageNumber="currentPageNumber"
+      :totalPageNumber="totalPageNumber"
+    />
+  </template>
 </template>
 <script>
 import Footer from '@/components/Footer.vue'
 import MovieContainer from '@/components/MovieContainer.vue'
 import MovieHeader from '@components/MovieHeader.vue'
+import Loading from '@components/Loading.vue'
 export default {
   components: {
     MovieContainer,
     Footer,
     MovieHeader,
+    Loading,
   },
   computed: {
     movieList() {

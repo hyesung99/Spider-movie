@@ -60,9 +60,11 @@ export default {
         value: title,
       })
       this.$store.dispatch('searchModule/searchFirstPageMovies')
-    }, 200),
+    }, 100),
 
-    enterSearch() {
+    async enterSearch() {
+      this.$store.dispatch('searchModule/stopSearchAllMovies')
+      await this.$store.dispatch('searchModule/searchFirstPageMovies')
       this.setDropdownVisiblliity(false)
       this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
       this.$store.dispatch('pageModule/setCurrentPageMovies')
