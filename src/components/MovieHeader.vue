@@ -2,7 +2,6 @@
   <div class="movie_header">
     <div class="movie_header_home" @click="goHome">SPIDER MOVIE</div>
     <SearchBar
-      :mediaType="mediaType"
       :changeSearchMediaType="changeSearchMediaType"
       :changeSearchTitle="changeSearchTitle"
       :enterSearch="enterSearch"
@@ -69,10 +68,13 @@ export default {
         this.$store.dispatch('searchModule/stopSearchAllMovies')
       }
       await this.$store.dispatch('searchModule/searchFirstPageMovies')
-      const currentPage = this.$store.state.searchModule.searchResult[0]
+      const currentPageMovieList =
+        this.$store.state.searchModule.searchResult[0]
       this.setDropdownVisiblliity(false)
       this.$store.dispatch('pageModule/setCurrentPageNumber', basePageNumber)
-      this.$store.dispatch('pageModule/setCurrentPageMovies', { currentPage })
+      this.$store.dispatch('pageModule/setCurrentPageMovies', {
+        currentPageMovieList,
+      })
       this.$router.push({ name: 'SearchResult' })
       this.$store.dispatch('searchModule/searchAllMovies')
     },

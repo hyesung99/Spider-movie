@@ -12,8 +12,7 @@ interface Movie {
 const pageModule: Module<PageState, RootState> = {
   namespaced: true,
   state: {
-    currentPage: 1,
-    currentPageMovies: {} as Movie,
+    currentPageMovieList: {} as Movie,
   },
   mutations: {
     assignState(
@@ -24,43 +23,13 @@ const pageModule: Module<PageState, RootState> = {
       state[key] = value
     },
   },
-  getters: {
-    currentPageNumber(state) {
-      return state.currentPage
-    },
 
-    currentPageMovies(state) {
-      return state.currentPageMovies
-    },
-  },
   actions: {
-    setCurrentPageNumber({ commit }, payload: number) {
-      if (payload < 1) return
-      commit('assignState', {
-        key: 'currentPage',
-        value: payload,
-      })
-    },
-
-    addCurrentPageNumber({ commit, state, rootState }, payload: number) {
-      const totalPage = rootState.searchModule.totalPage
-      if (
-        state.currentPage + payload < 1 ||
-        state.currentPage + payload > Number(totalPage)
-      )
-        return
-      commit('assignState', {
-        key: 'currentPage',
-        value: state.currentPage + payload,
-      })
-    },
-
     setCurrentPageMovies({ commit }, payload) {
-      const { currentPage } = payload
-      console.log(currentPage)
+      const { currentPageMovieList } = payload
       commit('assignState', {
-        key: 'currentPageMovies',
-        value: currentPage ? currentPage : [],
+        key: 'currentPageMovieList',
+        value: currentPageMovieList ? currentPageMovieList : [],
       })
     },
   },

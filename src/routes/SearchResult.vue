@@ -1,11 +1,11 @@
 <template>
-  <template v-if="!movieList">
+  <template v-if="!currentPageMovieList">
     <Loading />
   </template>
-  <template v-else-if="movieList">
+  <template v-else-if="currentPageMovieList">
     <MovieHeader />
     <section class="main">
-      <MovieContainer :movieList="movieList" />
+      <MovieContainer :movieList="currentPageMovieList" />
     </section>
     <Footer
       :nextPage="nextPage"
@@ -27,9 +27,17 @@ export default {
     MovieHeader,
     Loading,
   },
+  data() {
+    return {
+      currentPageNumber: 1,
+    }
+  },
   computed: {
-    movieList() {
-      return this.$store.state.pageModule.currentPageMovies
+    currentPageMovieList() {
+      return this.$store.state.pageModule.currentPageMovieList
+    },
+    allMovieList() {
+      return this.$store.state.searchModule.searchResult
     },
     currentPageNumber() {
       return this.$store.state.pageModule.currentPage
@@ -40,12 +48,18 @@ export default {
   },
   methods: {
     nextPage() {
-      this.$store.dispatch('pageModule/addCurrentPageNumber', 1)
-      this.$store.dispatch('pageModule/setCurrentPageMovies')
+      this.currentPageNumber += 1
+      const currentPageMovieList = this.allMovieList[this.currentPageNumber]
+      this.$store.dispatch('pageModule/setCurrentPageMovies', {
+        currentPageMovieList,
+      })
     },
     prevPage() {
-      this.$store.dispatch('pageModule/addCurrentPageNumber', -1)
-      this.$store.dispatch('pageModule/setCurrentPageMovies')
+      this.currentPageNumber -= 1
+      const currentPageMovieList = this.allMovieList[this.currentPageNumber]
+      this.$store.dispatch('pageModule/setCurrentPageMovies', {
+        currentPageMovieList,
+      })
     },
   },
 }

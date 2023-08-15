@@ -24,8 +24,7 @@ export interface SearchState {
 }
 
 export interface PageState {
-  currentPage: number
-  currentPageMovies: Movie
+  currentPageMovieList: Movie
 }
 
 export interface DetailState {
