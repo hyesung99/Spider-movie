@@ -25,6 +25,7 @@ export interface SearchState {
 
 export interface PageState {
   currentPageMovieList: Movie
+  currentPageNumber: number
 }
 
 export interface DetailState {
@@ -38,7 +39,7 @@ interface SearchResult {
   Response: string
 }
 
-interface Movie {
+export interface Movie {
   Title: string
   Year: string
   imdbID: string

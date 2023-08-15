@@ -27,11 +27,7 @@ export default {
     MovieHeader,
     Loading,
   },
-  data() {
-    return {
-      currentPageNumber: 1,
-    }
-  },
+
   computed: {
     currentPageMovieList() {
       return this.$store.state.pageModule.currentPageMovieList
@@ -40,7 +36,7 @@ export default {
       return this.$store.state.searchModule.searchResult
     },
     currentPageNumber() {
-      return this.$store.state.pageModule.currentPage
+      return this.$store.state.pageModule.currentPageNumber
     },
     totalPageNumber() {
       return this.$store.state.searchModule.totalPage
@@ -48,14 +44,14 @@ export default {
   },
   methods: {
     nextPage() {
-      this.currentPageNumber += 1
+      this.$store.dispatch('pageModule/addCurrentPageNumber', 1)
       const currentPageMovieList = this.allMovieList[this.currentPageNumber]
       this.$store.dispatch('pageModule/setCurrentPageMovies', {
         currentPageMovieList,
       })
     },
     prevPage() {
-      this.currentPageNumber -= 1
+      this.$store.dispatch('pageModule/addCurrentPageNumber', -1)
       const currentPageMovieList = this.allMovieList[this.currentPageNumber]
       this.$store.dispatch('pageModule/setCurrentPageMovies', {
         currentPageMovieList,
