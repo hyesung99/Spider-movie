@@ -24,10 +24,6 @@ const pageModule: Module<PageState, RootState> = {
         state.currentPageNumber + payload > 1 &&
         state.currentPageNumber + payload < Number(totalPage)
       ) {
-        console.log(
-          'state.currentPageNumber',
-          state.currentPageNumber + payload,
-        )
         commit('assignState', {
           key: 'currentPageNumber',
           value: state.currentPageNumber + payload,
