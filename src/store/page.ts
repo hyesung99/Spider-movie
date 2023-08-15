@@ -55,9 +55,9 @@ const pageModule: Module<PageState, RootState> = {
       })
     },
 
-    setCurrentPageMovies({ commit, state, rootState }) {
-      const searchResult = rootState.searchModule.searchResult
-      const currentPage = searchResult[state.currentPage - 1]
+    setCurrentPageMovies({ commit }, payload) {
+      const { currentPage } = payload
+      console.log(currentPage)
       commit('assignState', {
         key: 'currentPageMovies',
         value: currentPage ? currentPage : [],

@@ -53,21 +53,27 @@ export default {
       this.$store.dispatch('searchModule/searchFirstPageMovies')
     },
 
-    changeSearchTitle: debounce(function (title) {
+    changeSearchTitle(title) {
       this.setDropdownVisiblliity(true)
       this.$store.dispatch('searchModule/setSearchOptions', {
         key: 'searchTitle',
         value: title,
       })
-      this.$store.dispatch('searchModule/searchFirstPageMovies')
-    }, 100),
+      this.searchFirstPageMoviesByInputChange()
+    },
+
+    searchFirstPageMoviesByInputChange: debounce(async function () {
+      await this.$store.dispatch('searchModule/searchFirstPageMovies')
+    }, 300),
 
     async enterSearch() {
       this.$store.dispatch('searchModule/stopSearchAllMovies')
       await this.$store.dispatch('searchModule/searchFirstPageMovies')
+      const currentPage = this.$store.state.searchModule.searchResult[0]
+      console.log(currentPage)
       this.setDropdownVisiblliity(false)
       this.$store.dispatch('pageModule/setCurrentPageNumber', 1)
-      this.$store.dispatch('pageModule/setCurrentPageMovies')
+      this.$store.dispatch('pageModule/setCurrentPageMovies', { currentPage })
       this.$router.push({ name: 'SearchResult' })
       this.$store.dispatch('searchModule/searchAllMovies')
     },
