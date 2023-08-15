@@ -34,6 +34,6 @@
     "src/types/**.d.ts",
     "src/cosntants/index.js",
     "src/apis/movieSearchApi.js"
-  ],
+, "src/utils/debounce.js"  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

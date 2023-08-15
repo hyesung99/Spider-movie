@@ -28,6 +28,7 @@ export interface PageState {
 
 export interface DetailState {
   movieDetail: MovieDetail
+  isLoading: Boolean
 }
 
 interface SearchResult {

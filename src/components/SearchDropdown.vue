@@ -1,5 +1,6 @@
 <template>
   <div class="header_searchBar_result">
+    <div>일치하는 검색결과가 없습니다</div>
     <div
       class="header_searchBar_result_item"
       v-for="movie in movieList"
@@ -40,11 +41,14 @@ export default {
 @import '@/scss/_size.scss';
 
 .header_searchBar_result {
+  color: white;
+  text-align: center;
+  line-height: 50px;
   display: flex;
   flex-direction: column;
   position: absolute;
   width: 100%;
-  max-height: 500px;
+  height: 500px;
   top: $header-height;
   overflow: auto;
   z-index: 5;

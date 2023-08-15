@@ -6,6 +6,7 @@ const detailModule: Module<DetailState, RootState> = {
   namespaced: true,
   state: {
     movieDetail: {} as MovieDetail,
+    isLoading: false,
   },
   mutations: {
     assignState(
@@ -18,10 +19,18 @@ const detailModule: Module<DetailState, RootState> = {
   },
   actions: {
     async getMovieDetail({ commit }, payload: string) {
+      commit('assignState', {
+        key: 'isLoading',
+        value: true,
+      })
       const movieDetail = await fetchMovieDetail(payload)
       commit('assignState', {
         key: 'movieDetail',
         value: movieDetail,
+      })
+      commit('assignState', {
+        key: 'isLoading',
+        value: false,
       })
     },
   },

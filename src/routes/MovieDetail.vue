@@ -1,6 +1,6 @@
 <template>
   <MovieHeader />
-  <div class="detail">
+  <div class="detail" v-if="!isLoading">
     <div class="detail_poster">
       <img class="detail_poster_img" :src="movieDetail.Poster" />
       <div class="detail_poster_shadow"></div>
@@ -38,13 +38,16 @@
       </div>
     </div>
   </div>
+  <Loading v-else-if="isLoading" />
 </template>
 
 <script>
 import MovieHeader from '@/components/MovieHeader.vue'
+import Loading from '@components/Loading.vue'
 export default {
   components: {
     MovieHeader,
+    Loading,
   },
   created() {
     this.getMovieDetail()
@@ -55,6 +58,9 @@ export default {
     },
     genres() {
       return this.movieDetail.Genre.split(', ')
+    },
+    isLoading() {
+      return this.$store.state.detailModule.isLoading
     },
   },
   watch: {
