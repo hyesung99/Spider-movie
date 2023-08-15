@@ -64,10 +64,12 @@ export default {
 
     searchFirstPageMoviesByInputChange: debounce(async function () {
       await this.$store.dispatch('searchModule/searchFirstPageMovies')
-    }, 300),
+    }, 200),
 
-    async enterSearch() {
-      this.$store.dispatch('searchModule/stopSearchAllMovies')
+    async enterSearch(title) {
+      if (title !== this.$store.state.searchModule.searchTitle) {
+        this.$store.dispatch('searchModule/stopSearchAllMovies')
+      }
       await this.$store.dispatch('searchModule/searchFirstPageMovies')
       const currentPage = this.$store.state.searchModule.searchResult[0]
       console.log(currentPage)

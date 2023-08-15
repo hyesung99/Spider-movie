@@ -3,7 +3,7 @@
     <input
       class="header_searchBar_input"
       @input="changeSearchTitle($event.target.value)"
-      @keydown.enter="enterSearch"
+      @keydown.enter="enterSearch($event.target.value)"
       ref="searchInput"
       type="text"
       placeholder="검색"
