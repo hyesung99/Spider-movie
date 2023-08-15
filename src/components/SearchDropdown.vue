@@ -1,7 +1,10 @@
 <template>
   <div class="header_searchBar_result">
-    <div>일치하는 검색결과가 없습니다</div>
+    <div class="header_searchBar_result_fail" v-if="!searchSucceed">
+      {{ searchFailMessage }}
+    </div>
     <div
+      v-else-if="searchSucceed"
       class="header_searchBar_result_item"
       v-for="movie in movieList"
       :key="movie.imdbID"
@@ -32,6 +35,14 @@ export default {
       required: true,
     },
   },
+  computed: {
+    searchSucceed() {
+      return this.$store.state.searchModule.searchSucceed
+    },
+    searchFailMessage() {
+      return this.$store.state.searchModule.searchFailMessage
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -53,6 +64,10 @@ export default {
   overflow: auto;
   z-index: 5;
   background-color: $color-dropdown-background;
+  &_fail {
+    @include text.setText(20px, bold, $color-movieCard-text, center);
+    color: white;
+  }
   &_item {
     cursor: pointer;
     width: 100%;

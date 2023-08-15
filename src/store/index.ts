@@ -19,6 +19,8 @@ export interface SearchState {
   totalPage: string
   searchMediaType: (typeof MediaTypes)[keyof typeof MediaTypes]
   searchNew: Boolean
+  searchSucceed: Boolean
+  searchFailMessage: string
 }
 
 export interface PageState {

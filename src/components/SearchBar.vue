@@ -3,11 +3,11 @@
     <input
       class="header_searchBar_input"
       @input="changeSearchTitle($event.target.value)"
+      @keydown.enter="enterSearch"
       ref="searchInput"
       type="text"
       placeholder="검색"
     />
-    <!-- @keydown.enter="enterSearch" 추가예정 -->
     <div class="header_searchBar_rightside">
       <div
         class="header_searchBar_rightside_selected"

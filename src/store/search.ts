@@ -15,6 +15,8 @@ const searchModule: Module<SearchState, RootState> = {
     totalPage: '1',
     searchMediaType: MediaTypes.MOVIE,
     searchNew: false,
+    searchSucceed: false,
+    searchFailMessage: '',
   },
   mutations: {
     assignState(
@@ -45,18 +47,33 @@ const searchModule: Module<SearchState, RootState> = {
       })
       dispatch('setSearchOptions', { key: 'searchPage', value: 1 })
       const searchResult = await fetchMovieData(state.searchQuery)
-      commit('assignState', {
-        key: 'searchResult',
-        value: [searchResult.Search],
-      })
-      commit('assignState', {
-        key: 'searchRecommendation',
-        value: searchResult.Search,
-      })
-      commit('assignState', {
-        key: 'totalPage',
-        value: Math.ceil(Number(searchResult.totalResults) / 10),
-      })
+      if (searchResult.Response === 'False') {
+        commit('assignState', {
+          key: 'searchSucceed',
+          value: false,
+        })
+        commit('assignState', {
+          key: 'searchFailMessage',
+          value: searchResult.Error,
+        })
+      } else if (searchResult.Response === 'True') {
+        commit('assignState', {
+          key: 'searchSucceed',
+          value: true,
+        })
+        commit('assignState', {
+          key: 'searchResult',
+          value: [searchResult.Search],
+        })
+        commit('assignState', {
+          key: 'searchRecommendation',
+          value: searchResult.Search,
+        })
+        commit('assignState', {
+          key: 'totalPage',
+          value: Math.ceil(Number(searchResult.totalResults) / 10),
+        })
+      }
     },
 
     async searchAllMovies({ commit, dispatch, state }) {
